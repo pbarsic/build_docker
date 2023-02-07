@@ -151,4 +151,5 @@ RUN apt-get update \
                libcrypto++-utils \
                uuid-runtime \
                libyaml-cpp-dev \
+               clang-format-10 \
     && rm -rf /var/lib/apt/lists/*
