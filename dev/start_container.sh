@@ -2,10 +2,10 @@
 
 xhost +local:docker
 
-IMAGE=iris/paul:0.1
+IMAGE=iris/${USER}:$(cat ../version.txt)
 ENTRYPOINT=/bin/bash
 WORKDIR=$HOME
-CONTAINERNAME=track_fusion
+CONTAINERNAME=iris_dev
 
 MOGRIFY=1
 

@@ -150,5 +150,5 @@ RUN apt-get update \
                libcrypto++-doc \
                libcrypto++-utils \
                uuid-runtime \
-               yaml-cpp \
+               libyaml-cpp-dev \
     && rm -rf /var/lib/apt/lists/*
