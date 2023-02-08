@@ -113,6 +113,7 @@ RUN echo "deb http://old-releases.ubuntu.com/ubuntu/ yakkety universe" | tee -a 
     && rm -rf /var/lib/apt/lists/*
 
 ENV cvVersion="3.4.5"
+ENV CUDA_ARCH="6.1"
 
 # build OpenCV version cvVersion
 RUN cd /tmp \
@@ -124,7 +125,7 @@ RUN cd /tmp \
     && cmake -D CMAKE_BUILD_TYPE=RELEASE \
              -D WITH_TBB=ON \
              -D WITH_CUDA=ON \
-             -D CUDA_ARCH_BIN="6.1" \
+             -D CUDA_ARCH_BIN=$CUDA_ARCH \
              -D CUDA_ARCH_PTX="" \
              -D WITH_CUBLAS=ON \
              -D ENABLE_FAST_MATH=ON \
@@ -135,7 +136,7 @@ RUN cd /tmp \
              -D BUILD_EXAMPLES=OFF \
              -D WITH_QT=ON \
              -D WITH_OPENGL=OFF \
-	         -D BUILD_opencv_cudacodec=OFF \
+             -D BUILD_opencv_cudacodec=OFF \
              .. \
     && make -j$(($(nproc)-1)) \
     && make install \

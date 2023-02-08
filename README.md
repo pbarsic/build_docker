@@ -4,7 +4,8 @@ This is a set of Docker files for building a repeatable development environment.
 
 ## pre-build
 
-Follow the instructions on [this page](https://irisautomation.atlassian.net/wiki/spaces/RD/pages/1792639001/Setup+Instructions+dev+environment+with+Docker) to configure your system properly.
+Follow the instructions on [this page](https://irisautomation.atlassian.net/wiki/spaces/RD/pages/1792639001/Setup+Instructions+dev+environment+with+Docker) to configure your system properly. This repository contains
+the scripts that you would otherwise have to copy and paste from there.
 
 ## base
 
