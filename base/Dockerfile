@@ -113,7 +113,7 @@ RUN echo "deb http://old-releases.ubuntu.com/ubuntu/ yakkety universe" | tee -a 
     && rm -rf /var/lib/apt/lists/*
 
 ENV cvVersion="3.4.5"
-ENV CUDA_ARCH="6.1"
+ENV CUDA_ARCH="7.5"
 
 # build OpenCV version cvVersion
 RUN cd /tmp \

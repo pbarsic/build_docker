@@ -25,7 +25,21 @@ tag for a later part of the process, the iris packages builds.
 ## dev
 
 1. Build a developer container, which is a thin container on top of `iris/dev_base:latest` but does nice things with ownership and permissions: 
-`cd dev && docker build -t iris/${USER}:$(cat ../version.txt) --build-arg RUNTIME_USERNAME=${USER} --build-arg RUNTIME_UID=${UID} .`
+```bash
+cd dev && \
+docker build \
+   -t iris/${USER}:$(cat ../version.txt) \
+   --build-arg RUNTIME_USERNAME=${USER} \
+   --build-arg RUNTIME_UID=${UID} \
+   .
+```
+
+There is a line in `dev/Dockerfile` that says `ENV CUDA_FORCE_PTX_JIT=1`. This is necessary for a newer generation
+GPU. I have an Ampere generation GPU (compute 8.6), but CUDA-10.2
+only knows up to compute 7.x, so to compensate I build OpenCV at
+that version and then set that environment variable.
+[Backward Compatibility Guide](https://docs.nvidia.com/cuda/ampere-compatibility-guide/)
+
 
 2. Mount the shared folders (`/mnt/dms`, `/mnt/research`, `/mnt/sim`) prior to starting a docker container which may need those resources.
 3. Start the container with the `dev/start_container.sh` script, which will cache container changes.
@@ -43,4 +57,3 @@ As a member of R&D, I'm biased toward getting Dynamic Tracker working. The
 If you've already built DT but have had to re-start the container for any reason, 
 the cached state will be forgotten. In that case, simply run the `dev/install_dt.sh`
 script to re-install.
-
