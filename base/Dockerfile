@@ -74,9 +74,21 @@ RUN apt-get update \
 RUN cd /usr/include/linux \
     && ln -s -f ../libv4l1-videodev.h videodev.h
 
+# other dependencies
+RUN apt-get update \
+    && apt-get -y install \
+               libcrypto++-dev \
+               libcrypto++-doc \
+               libcrypto++-utils \
+               uuid-runtime \
+               libyaml-cpp-dev \
+               clang-format-10 \
+    && rm -rf /var/lib/apt/lists/*
+
 # install tensorrt
 COPY nv-tensorrt-repo-ubuntu1804-cuda10.2-trt7.1.3.4-ga-20200617_1-1_amd64.deb /tmp
 RUN dpkg -i /tmp/nv-tensorrt-repo-ubuntu1804-cuda10.2-trt7.1.3.4-ga-20200617_1-1_amd64.deb \
+    && rm /tmp/nv-tensorrt-repo-ubuntu1804-cuda10.2-trt7.1.3.4-ga-20200617_1-1_amd64.deb \
     && apt-key add /var/nv-tensorrt-repo-cuda10.2-trt7.1.3.4-ga-20200617/7fa2af80.pub \
     && apt-get update \
     && apt-get -y install libnvinfer7=7.1.3-1+cuda10.2 \
@@ -118,7 +130,10 @@ ENV CUDA_ARCH="7.5"
 # build OpenCV version cvVersion
 RUN cd /tmp \
     && git clone https://github.com/opencv/opencv.git \
-    && cd opencv \
+    && git clone https://github.com/opencv/opencv_contrib.git \
+    && cd opencv_contrib \
+    && git checkout $cvVersion \
+    && cd ../opencv \
     && git checkout $cvVersion \
     && mkdir build \
     && cd build \
@@ -144,13 +159,3 @@ RUN cd /tmp \
     && cd /tmp \
     && rm -rf /tmp/opencv
 
-# other dependencies
-RUN apt-get update \
-    && apt-get -y install \
-               libcrypto++-dev \
-               libcrypto++-doc \
-               libcrypto++-utils \
-               uuid-runtime \
-               libyaml-cpp-dev \
-               clang-format-10 \
-    && rm -rf /var/lib/apt/lists/*
