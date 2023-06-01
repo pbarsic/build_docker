@@ -149,9 +149,18 @@ RUN cd /tmp \
              -D BUILD_TESTS=OFF \
              -D BUILD_PERF_TESTS=OFF \
              -D BUILD_EXAMPLES=OFF \
+             -D BUILD_opencv_python3=ON \
              -D WITH_QT=ON \
              -D WITH_OPENGL=OFF \
+             -D WITH_GSTREAMER=ON \
              -D BUILD_opencv_cudacodec=OFF \
+             -D BUILD_opencv_cudacodec=OFF \
+             -D OPENCV_GENERATE_PKGCONFIG=ON \
+             -D OPENCV_PC_FILE_NAME=opencv.pc \
+             -D OPENCV_ENABLE_NONFREE=ON \
+             -D OPENCV_PYTHON3_INSTALL_PATH=$(python3 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())") \
+             -D PYTHON_EXECUTABLE=$(which python3) \
+             -DOPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules/ \
              .. \
     && make -j$(($(nproc)-1)) \
     && make install \
