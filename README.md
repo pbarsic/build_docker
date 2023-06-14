@@ -20,6 +20,34 @@ sudo apt update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
+(optional) Move your Docker cache from `/var/lib` to some place with more space. 
+[Instructions are here](https://www.baeldung.com/linux/docker-fix-no-space-error).
+In case they ever remove that page, the instructions are:
+
+Kill the Docker service:
+
+`sudo systemctl stop docker.service; sudo systemctl stop docker.socket`
+
+Edit `/etc/docker/daemon.json`. On my system, it becomes:
+
+```json
+{
+    "data-root": "/home/docker-ce",
+    "runtimes": {
+        "nvidia": {
+            "path": "nvidia-container-runtime",
+            "runtimeArgs": []
+        }
+    }
+}
+
+```
+
+Reload the config and restart the Docker daemon.
+
+`sudo systemctl daemon-reload && sudo systemctl start docker`
+
+
 Follow the [post-install instructions](https://docs.docker.com/engine/install/linux-postinstall/).
 Briefly, they are:
 
