@@ -2,10 +2,10 @@
 
 xhost +local:docker
 
-IMAGE=iris/${USER}:$(cat ../version.txt)
+IMAGE=${USER}:$(cat ../version.txt)
 ENTRYPOINT=/bin/bash
 WORKDIR=$HOME
-CONTAINERNAME=iris_dev
+CONTAINERNAME=dev_${USER}
 
 MOGRIFY=1
 
@@ -23,7 +23,6 @@ if [[ $MOGRIFY -eq 1 ]] ; then
     -v /mnt/dms:/mnt/dms \
     -v $HOME/Data:$HOME/Data \
     -v $HOME/Projects:$HOME/Projects \
-    -v $HOME/iris_ws:$HOME/iris_ws \
     --workdir ${WORKDIR} \
     ${IMAGE} ${ENTRYPOINT}
 else
@@ -41,7 +40,6 @@ else
     -v /mnt/dms:/mnt/dms \
     -v $HOME/Data:$HOME/Data \
     -v $HOME/Projects:$HOME/Projects \
-    -v $HOME/iris_ws:$HOME/iris_ws \
     --workdir ${WORKDIR} \
     ${IMAGE} ${ENTRYPOINT}
 fi
